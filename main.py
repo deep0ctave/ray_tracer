@@ -5,6 +5,8 @@ Author : Avinash(deep0ctave)
 Purpose : This is a ray-tracing project built from scratch to learn how it works. The project is built using Python and uses the Pygame library for rendering the final image. The project is inspired by the book "Ray Tracing in One Weekend" by Peter Shirley.
 """
 
+import tqdm
+
 def main():
 
     # Image Generation
@@ -16,7 +18,7 @@ def main():
     print(f"{image_width} {image_height}")
     print("255")
 
-    for y in range (0, image_height):
+    for y in tqdm.tqdm(range(0, image_height)):
         for x in range(0, image_width):
             r = x / (image_width - 1)
             g = y / (image_height - 1)
