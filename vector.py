@@ -26,6 +26,11 @@ class Vector():
             raise ValueError("Cannot normalize a zero-length vector.")
         return Vector(self.x / mag, self.y / mag, self.z / mag)
 
+    def dot(self, other):
+        if not isinstance(other, Vector):
+            raise TypeError("Dot product requires another Vector.")
+        return self.x * other.x + self.y * other.y + self.z * other.z
+
     def __repr__(self):
         return f"Vector({self.x}, {self.y}, {self.z})"
 
