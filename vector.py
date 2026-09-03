@@ -17,8 +17,14 @@ class Vector():
     def __abs__(self):
         return (self.x**2 + self.y**2 + self.z**2)**0.5
 
-    def __length__(self):
+    def length(self):
         return abs(self)
+
+    def normalize(self):
+        mag = self.length()
+        if mag == 0:
+            raise ValueError("Cannot normalize a zero-length vector.")
+        return Vector(self.x / mag, self.y / mag, self.z / mag)
 
     def __repr__(self):
         return f"Vector({self.x}, {self.y}, {self.z})"
