@@ -9,6 +9,7 @@ import tqdm
 from color import Color
 from ray import Ray
 from vector import Vector
+import random
 
 def main():
 
@@ -47,7 +48,10 @@ def main():
         b = 2.0 * oc.dot(ray.direction)
         c = oc.dot(oc) - radius * radius
         discriminant = b * b - 4 * a * c
-        return discriminant > 0 
+        if discriminant < 0:
+            return -1
+        else:
+            return (-b - discriminant ** 0.5) / (2 * a)
     
     for y in tqdm.tqdm(range(0, image_height)):
         for x in range(0, image_width):
@@ -59,8 +63,13 @@ def main():
             sphere_center = Vector(0, 0, -5)
             sphere_radius = 1.0
 
-            if is_sphere_hit(sphere_center, sphere_radius, ray):
-                ray_color = Color(1, 0, 0)  # Red color for the sphere
+            t = is_sphere_hit(sphere_center, sphere_radius, ray)
+            t = t if t > 0 else -1
+
+            if t > 0:
+                point_hit = ray.at(t)
+                normal = (point_hit - sphere_center).normalize()
+                ray_color = Color((normal.x + 1) * 0.5, (normal.y + 1) * 0.5, (normal.z + 1) * 0.5)
             else:
                 ray_color = Color(0.0, 0.0, 0.0)  # Background color
             print(ray_color.write_color())
